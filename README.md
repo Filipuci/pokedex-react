@@ -23,6 +23,10 @@
 
 <br>
 
+<img width="1895" height="1046" alt="image" src="https://github.com/user-attachments/assets/8a043c25-0cf5-4b71-a0b6-1bf3218c3a74" />
+
+<br> <br>
+
 <details>
 <summary>Sumário</summary>
 
