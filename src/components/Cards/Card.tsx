@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import type { PokeBase, PokeData } from "../../types/types";
 import { capitalization } from "../../utils/capitalization";
