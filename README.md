@@ -30,20 +30,20 @@
 <details>
 <summary>Sumário</summary>
 
-- [📍 Visão Geral](#-visão-geral)
-- [🎯 Funcionalidades](#-funcionalidades)
+- [ Visão Geral](#-visão-geral)
+- [ Funcionalidades](#-funcionalidades)
 - [📂 Estrutura do Projeto](#-estrutura-do-projeto)
-- [⚙️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
-- [🚀 Como Executar](#-como-executar)
-- [🧩 Decisões Técnicas](#-decisões-técnicas)
-- [📚 O que Aprendi](#-o-que-aprendi)
-- [📌 Possíveis Evoluções](#-possíveis-evoluções)
+- [ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
+- [ Como Executar](#-como-executar)
+- [ Decisões Técnicas](#-decisões-técnicas)
+- [ O que Aprendi](#-o-que-aprendi)
+- [ Possíveis Evoluções](#-possíveis-evoluções)
 
 </details>
 
 <hr>
 
-## 📍 Visão Geral
+## Visão Geral
 
 Esta Pokédex foi desenvolvida como uma evolução direta de um projeto anterior que consumia a PokeAPI utilizando `fetch` e JavaScript puro.
 
@@ -53,7 +53,7 @@ O aumento na verbosidade do código é intencional e reflete decisões arquitetu
 
 ---
 
-## 🎯 Funcionalidades
+## Funcionalidades
 
 - Listagem dos 151 Pokémons da primeira geração
 - Consumo da PokeAPI utilizando Axios
@@ -89,7 +89,7 @@ O aumento na verbosidade do código é intencional e reflete decisões arquitetu
     └── main.tsx
 ```
 
-## ⚙️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **React** – Construção da interface baseada em componentes  
 - **TypeScript** – Tipagem estática para maior segurança e previsibilidade  
@@ -99,7 +99,7 @@ O aumento na verbosidade do código é intencional e reflete decisões arquitetu
 
 ---
 
-## 🚀 Como Executar
+## Como Executar
 
 Clone o repositório:
 
@@ -122,7 +122,7 @@ Inicie o servidor de desenvolvimento:
 npm run dev
 ```
 
-## 🧩 Decisões Técnicas
+## Decisões Técnicas
 
 - **Axios** foi escolhido em vez de `fetch` para melhorar legibilidade, tratamento de erros e escalabilidade.
 
@@ -143,7 +143,7 @@ npm run dev
 
 ---
 
-## 📚 O que Aprendi
+## O que Aprendi
 
 - Diferenças práticas entre `fetch` e Axios
 - Tipagem de respostas de APIs externas com TypeScript
@@ -155,7 +155,7 @@ npm run dev
 
 ---
 
-## 📌 Possíveis Evoluções
+## Possíveis Evoluções
 
 - [ ] Implementar busca por nome
 - [ ] Filtros por tipo
