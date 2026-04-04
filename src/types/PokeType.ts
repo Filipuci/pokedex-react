@@ -1,15 +1,6 @@
-export interface PokesObject {
-  results: PokeBase[]
-}
-
-export interface PokeBase {
+export type PokeType = {
   name: string,
-  url: string
-}
-
-export interface PokeData {
-  id:number,
-  name: string,
+  id: number,
   sprites: {
     other: {
       ['official-artwork']: {
@@ -23,4 +14,3 @@ export interface PokeData {
     }
   }[]
 }
-

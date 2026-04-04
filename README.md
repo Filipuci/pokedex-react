@@ -1,169 +1,75 @@
-<p align="center">
-    <h1 align="center"><code>Pokedex React</code></h1>
-</p>
+# React + TypeScript + Vite
 
-<p align="center">
-    <em>
-        Uma Pokédex moderna construída com React e TypeScript, consumindo a PokeAPI.
-        O projeto foca em componentização, tipagem forte, reutilização de código e escalabilidade,
-        representando uma evolução direta de uma implementação anterior feita com JavaScript puro.
-    </em>
-</p>
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-<p align="center">
-    <em>Construído com as seguintes ferramentas e tecnologias:</em>
-</p>
+Currently, two official plugins are available:
 
-<p align="center">
-    <img src="https://img.shields.io/badge/React-61DAFB.svg?style=flat-square&logo=React&logoColor=black" alt="React">
-    <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=flat-square&logo=TypeScript&logoColor=white" alt="TypeScript">
-    <img src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat-square&logo=Axios&logoColor=white" alt="Axios">
-    <img src="https://img.shields.io/badge/TailwindCSS-38B2AC.svg?style=flat-square&logo=TailwindCSS&logoColor=white" alt="TailwindCSS">
-</p>
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-<br>
+## React Compiler
 
-<img width="1895" height="1046" alt="image" src="https://github.com/user-attachments/assets/8a043c25-0cf5-4b71-a0b6-1bf3218c3a74" />
+The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
 
-<br> <br>
+Note: This will impact Vite dev & build performances.
 
-<details>
-<summary>Sumário</summary>
+## Expanding the ESLint configuration
 
-- [ Visão Geral](#-visão-geral)
-- [ Funcionalidades](#-funcionalidades)
-- [📂 Estrutura do Projeto](#-estrutura-do-projeto)
-- [ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
-- [ Como Executar](#-como-executar)
-- [ Decisões Técnicas](#-decisões-técnicas)
-- [ O que Aprendi](#-o-que-aprendi)
-- [ Possíveis Evoluções](#-possíveis-evoluções)
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-</details>
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-<hr>
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## Visão Geral
-
-Esta Pokédex foi desenvolvida como uma evolução direta de um projeto anterior que consumia a PokeAPI utilizando `fetch` e JavaScript puro.
-
-Nesta versão, o foco foi elevar o nível técnico do projeto, adotando **React**, **TypeScript** e **Axios**, além de uma abordagem mais estruturada e escalável baseada em **componentização**, **tipagem forte** e **reutilização de código**.
-
-O aumento na verbosidade do código é intencional e reflete decisões arquiteturais voltadas à manutenibilidade e crescimento do projeto.
-
----
-
-## Funcionalidades
-
-- Listagem dos 151 Pokémons da primeira geração
-- Consumo da PokeAPI utilizando Axios
-- Renderização dinâmica de cards através de `map`
-- Card individual reutilizável para cada Pokémon
-- Exibição de:
-  - Imagem oficial
-  - Número formatado (padding)
-  - Nome com capitalização automática
-  - Tipos do Pokémon com cores dinâmicas
-- Efeitos de hover:
-  - Escala da imagem
-  - Alteração de cores dos tipos
-  - Mudança dinâmica da cor do nome conforme o tipo principal
-
----
-
-## 📂 Estrutura do Projeto
-
-```sh
-└── src
-    ├── components
-    │   └── Cards
-    │       └── Card.tsx
-    ├── services
-    │   └── api.ts
-    ├── types
-    │   └── types.ts
-    ├── utils
-    │   ├── capitalization.ts
-    │   └── padding.ts
-    ├── App.tsx
-    └── main.tsx
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-## Tecnologias Utilizadas
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-- **React** – Construção da interface baseada em componentes  
-- **TypeScript** – Tipagem estática para maior segurança e previsibilidade  
-- **Axios** – Cliente HTTP para consumo da PokeAPI  
-- **TailwindCSS** – Estilização utilitária com foco em produtividade  
-- **PokeAPI** – Fonte de dados dos Pokémons  
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
----
-
-## Como Executar
-
-Clone o repositório:
-
-```bash
-git clone https://github.com/Filipuci/pokedex-react.git
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-Acesse a pasta do projeto:
-```bash
-cd pokedex-react
-```
-
-Instale as dependências
-```bash
-npm install
-```
-
-Inicie o servidor de desenvolvimento:
-```bash
-npm run dev
-```
-
-## Decisões Técnicas
-
-- **Axios** foi escolhido em vez de `fetch` para melhorar legibilidade, tratamento de erros e escalabilidade.
-
-- **TypeScript** foi utilizado para:
-  - Tipar respostas da API
-  - Garantir contratos claros entre componentes
-  - Evitar erros comuns de runtime
-
-- **Componentização**:
-  - Existe um único componente de Card reutilizável
-  - A renderização ocorre via `map`, tornando a solução escalável
-
-- **Separação de responsabilidades**:
-  - services (API)
-  - types
-  - utilitys
-  - components
-
----
-
-## O que Aprendi
-
-- Diferenças práticas entre `fetch` e Axios
-- Tipagem de respostas de APIs externas com TypeScript
-- Organização de um projeto React de forma escalável
-- Criação de componentes reutilizáveis
-- Gerenciamento de estado com `useState` e `useEffect`
-- Limitações do TailwindCSS com classes dinâmicas e como contorná-las corretamente
-- Importância de separar lógica, visual e utilidades
-
----
-
-## Possíveis Evoluções
-
-- [ ] Implementar busca por nome
-- [ ] Filtros por tipo
-- [ ] Loading da página com Context
-- [ ] Modal com detalhes do Pokémon
-- [ ] Versão mobile-first
-
----
-
-> Este projeto representa um marco pessoal de evolução técnica, consolidando a transição de JavaScript puro para uma arquitetura moderna baseada em React e TypeScript.
-

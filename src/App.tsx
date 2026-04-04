@@ -1,27 +1,37 @@
 import { useEffect, useState } from "react"
-import { api } from "./services/api"
-import type { PokeBase, PokesObject } from "./types/types"
-import { Card } from "./components/Cards/Card"
+import { Card } from "./components/Card"
+import { usePokeData } from "./utils/queries"
+import type { PokeBase } from "./types/PokeBase"
 
-function App() {
-  const [pokesBase, setPokesBase] = useState<PokeBase[] | null>(null)
+const App = () => {
+  const limit = 12
+  const [offset, setOffset] = useState(0)
+  const { data, isLoading } = usePokeData(limit, offset)
+  const [pokeList, setPokeList] = useState<PokeBase[]>([])
 
   useEffect(() => {
-    const getPokesBase = async () => {
-      const { data: { results } } = await api.get<PokesObject>('pokemon?limit=151&offset=0')
-      setPokesBase(results)
-    }
-
-    getPokesBase()
-  }, [])
+    if (!data) return
+    setPokeList(prev => [...prev, ...data])
+  }, [data])
 
   return (
-    <div className="grid grid-cols-4 items-center w-2/3 mx-auto">
-      {pokesBase && pokesBase.map((detail) => (
-        <Card key={detail.name} baseObject={detail} />
-      ))}
+    <div className="flex flex-col items-center">
+      <div className="grid grid-cols-4 items-center w-2/3 mx-auto">
+        {pokeList?.map(item => (
+          <Card key={item.name} baseObject={item} />
+        ))}
+      </div>
+
+      <button
+        onClick={() => setOffset(prev => prev + limit)}
+        className="border border-white w-1/8 rounded-md py-2 my-5
+       cursor-pointer hover:bg-white hover:text-black transition-all duration-300"
+      >
+        Carregar mais pokemons...
+      </button>
     </div>
   )
 }
+
 
 export default App

@@ -1,62 +1,48 @@
-import { useEffect, useState } from "react";
-import { api } from "../../services/api";
-import type { PokeBase, PokeData } from "../../types/types";
-import { capitalization } from "../../utils/capitalization";
-import { padding } from "../../utils/padding";
+import { useState } from "react"
+import type { PokeBase } from "../types/PokeBase"
+import { capitalization } from "../utils/capitalization"
+import { padding } from "../utils/padding"
+import { usePokemon } from "../utils/queries"
 
-interface CardProps {
-  baseObject: PokeBase
-}
-
-export function Card({ baseObject }: CardProps) {
-
+export const Card = ({ baseObject }: { baseObject: PokeBase }) => {
+  const { data } = usePokemon(baseObject.name)
   const [nameColor, setNameColor] = useState('white')
-  const [pokeData, setPokeData] = useState<PokeData | null>(null)
-
-  useEffect(() => {
-    const getPokeData = async () => {
-      const { data } = await api.get<PokeData>(`/pokemon/${baseObject.name}`)
-      setPokeData(data)
-    }
-
-    getPokeData()
-  }, [])
 
   const handleSetNameColor = () => {
-    if (pokeData)
+    if (data)
       setNameColor(() => {
-        return getTypeBg(pokeData.types[0].type.name).slice(4, 11)
+        return getTypeBg(data.types[0].type.name).slice(4, 11)
       })
   }
 
   const handleResetColor = () => {
-    if (pokeData)
+    if (data)
       setNameColor('white')
   }
 
   return (
     <>
-      {pokeData &&
+      {data &&
         <div className="bg-[#18191d] p-4 rounded-sm mr-16 w-60 justify-self-center my-4 border-3 border-[#5e5e5e]">
           <div className="bg-linear-to-b from-[#1B1E25] to-[#2f343f] rounded-sm">
             <img
               className="w-50 mx-auto transition duration-300 hover:scale-90 cursor-pointer"
-              src={pokeData.sprites.other["official-artwork"].front_default}
-              alt={pokeData.name} onMouseEnter={handleSetNameColor} onMouseLeave={handleResetColor}
+              src={data.sprites.other["official-artwork"].front_default}
+              alt={data.name} onMouseEnter={handleSetNameColor} onMouseLeave={handleResetColor}
             />
           </div>
 
-          <p className="mt-2 text-gray-500 font-bold">N° {padding(pokeData.id)}</p>
-          <p style={{ color: nameColor }} className={`font-bold mb-2 transition duration-700`}>{capitalization(pokeData.name)}</p>
+          <p className="mt-2 text-gray-500 font-bold">N° {padding(data.id)}</p>
+          <p style={{ color: nameColor }} className={`font-bold mb-2 transition duration-700`}>{capitalization(data.name)}</p>
           <div className="flex gap-1.75">
             <div
-              className={`${getTypeBg(pokeData.types[0].type.name)} px-3 rounded-sm text-white font-bold cursor-pointer transition duration-300 hover:scale-105`}
+              className={`${getTypeBg(data.types[0].type.name)} px-3 rounded-sm text-white font-bold cursor-pointer transition duration-300 hover:scale-105`}
             >
-              {capitalization(pokeData.types[0].type.name)}
+              {capitalization(data.types[0].type.name)}
             </div>
-            {pokeData.types[1] &&
-              <div className={`${getTypeBg(pokeData.types[1].type.name)} px-3 rounded-sm text-white font-bold cursor-pointer transition duration-300 hover:scale-105`}>
-                {capitalization(pokeData.types[1].type.name)}
+            {data.types[1] &&
+              <div className={`${getTypeBg(data.types[1].type.name)} px-3 rounded-sm text-white font-bold cursor-pointer transition duration-300 hover:scale-105`}>
+                {capitalization(data.types[1].type.name)}
               </div>
             }
           </div>
@@ -133,4 +119,3 @@ const getTypeBg = (type: string) => {
       return 'bg-neutral-400 hover:bg-neutral-500';
   }
 };
-
