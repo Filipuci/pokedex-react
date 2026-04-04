@@ -6,7 +6,7 @@ import type { PokeBase } from "./types/PokeBase"
 const App = () => {
   const limit = 12
   const [offset, setOffset] = useState(0)
-  const { data, isLoading } = usePokeData(limit, offset)
+  const { data } = usePokeData(limit, offset)
   const [pokeList, setPokeList] = useState<PokeBase[]>([])
 
   useEffect(() => {

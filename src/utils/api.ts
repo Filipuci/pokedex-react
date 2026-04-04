@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { PokeBase } from "../types/PokeBase";
-import type { PokeType } from "../types/pokeType";
+import type { PokeType } from "../types/PokeType";
 
 const api = axios.create({
   baseURL: "https://pokeapi.co/api/v2/"
