@@ -1,75 +1,95 @@
-# React + TypeScript + Vite
+# Pokédex
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma Pokédex moderna desenvolvida com React que consome a PokeAPI para exibir dados de Pokémon com paginação e otimização de requisições.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Consumo de dados da PokeAPI
+- Paginação com botão "Carregar mais"
+- Cache automático e otimização de requisições
+- Cards dinâmicos com informações dos Pokémon (sprite, type, id)
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+---
 
-Note: This will impact Vite dev & build performances.
+## Technologies
 
-## Expanding the ESLint configuration
+- React (Vite)
+- TanStack Query (React Query)
+- Axios
+- TypeScript
+- TailwindCSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Como funciona
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+A aplicação é estruturada em duas queries principais:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Query de Lista de Pokémon
+Responsável por buscar uma lista paginada com dados básicos:
+- `name`
+- `url`
+
+### 2. Query de Detalhes do Pokémon
+Responsável por buscar os dados completos de cada Pokémon:
+- sprite
+- id
+- tipos
+- outros atributos
+
+---
+
+## Fluxo de Dados
+
+1. O componente principal (`App`) busca a lista de Pokémon
+2. Os nomes são armazenados e renderizados com um `map`
+3. Cada nome é passado para um componente `Card`
+4. Dentro do `Card`, uma segunda query busca os detalhes do Pokémon
+5. A interface é construída com base nesses dados
+
+---
+
+## Paginação (Load More)
+
+- Inicialmente são carregados 12 Pokémons
+- Um botão "Carregar mais" atualiza o `offset`
+- O `offset` faz parte da `queryKey`
+- Ao mudar, o TanStack Query realiza uma nova requisição automaticamente
+- Os novos dados são adicionados à lista existente
+
+---
+
+## Performance
+
+- Cache automático com TanStack Query
+- Evita requisições desnecessárias
+- Melhora a performance e experiência do usuário
+
+---
+
+## Instalação
+
+```bash
+# Clone o repositório
+git clone https://github.com/Filipuci/pokedex.git
+
+# Acesse a pasta
+cd pokedex
+
+# Instale as dependências
+npm install
+
+# Rode o projeto
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Melhorias futuras
+- Implementar busca por nome
+- Filtro por tipo de Pokémon
+- Sistema de favoritos (usando mutations)
+- Infinite Scrolls
+- Melhorar gerenciamento global de estado
+- Modal com mais detalhes de cada pokemon (atributos, etc)
+- Refatoração
